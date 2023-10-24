@@ -1,0 +1,12 @@
+/*!
+ *  Bebas Neue
+ */
+/* FONT PATH
+ * -------------------------- */
+@font-face {
+  font-family: 'bebas-neue';
+  src: url('../BebasNeue-Regular.eot?v=4.7.0');
+  src: url('../BebasNeue-Regular.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../BebasNeue-Regular.woff?v=4.7.0') format('woff2'), url('../BebasNeue-Regular.woff?v=4.7.0') format('woff'), url('../BebasNeue-Regular.ttf.ttf?v=4.7.0') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

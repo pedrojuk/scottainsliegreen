@@ -1,0 +1,9 @@
+// .paragraph
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.paragraph {
+
+  .field-name-field-image img,
+  .field-name-field-embed iframe {
+    margin-bottom: $paragraph-margin-bottom;
+  }
+}

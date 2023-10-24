@@ -1,0 +1,27 @@
+// #sliding-popup
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+#sliding-popup {
+
+  &.sliding-popup-bottom {
+    background: get-color(kt-dark-green);
+  }
+
+  .popup-content {
+    max-width: 100%;
+    padding: $callout-padding;
+
+    .popup-text {
+      color: $white;
+      text-align: left;
+    }
+
+    .popup-buttons button {
+      margin-bottom: 0;
+      margin-right: $global-padding / 2;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+}

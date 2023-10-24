@@ -1,0 +1,32 @@
+{#
+/**
+ * @file
+ * This is a template file for a banner prompting user to give their consent for
+ * the website to set cookies.
+ *
+ * When overriding this template it is important to note that jQuery will use
+ * the following classes to assign actions to buttons:
+ *
+ * agree-button      - agree to setting cookies
+ * find-more-button  - link to an information page
+ *
+ * Variables available:
+ * - message:  Contains the text that will be display whithin the banner
+ * - agree_button: Label for the agree button
+ * - disagree_button: Label for the disagree button
+ */
+#}
+
+<div>
+  <div class ="row collapse popup-content info">
+    <div class="medium-9 columns popup-text">
+      {{ message }}
+    </div>
+    <div class="medium-3 columns popup-buttons medium-text-right">
+      <button type="button" class="button kt-mid-green medium agree-button">{{ agree_button }}</button>
+      {% if disagree_button %}
+        <button type="button" class="button kt-mid-green medium find-more-button">{{ disagree_button }}</button>
+      {% endif %}
+    </div>
+  </div>
+</div>

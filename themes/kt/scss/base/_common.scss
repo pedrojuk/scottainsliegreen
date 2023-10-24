@@ -1,0 +1,116 @@
+// Common abstract classes to extend or parametrics are stored here.
+
+// Example parametrics.
+// ------------------------------------------------------
+// %font-FONTNAME   {}
+// %font-sans-serif { font-family: sans-serif; }
+// %font-serif      { font-family: serif; }
+
+body {
+  font-size: $body-font-size;
+}
+
+// .icon-button
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+$social-brand-facebook: #3b5998;
+$social-brand-twitter: #1da1f2;
+$social-brand-youtube: #f00;
+$social-brand-instagram: purple;
+$icon-button-size: rem-calc(44);
+$icon-button-size-medium: rem-calc(48);
+
+.icon-button {
+  background: none;
+  display: inline-block;
+  font-size: rem-calc(map-deep-get($header-styles, small, h3, font-size));
+  height: $icon-button-size;
+  position: relative;
+  text-align: center;
+  width: $icon-button-size;
+
+  @include breakpoint(medium) {
+    font-size: rem-calc(map-deep-get($header-styles, medium, h3, font-size));
+    height: $icon-button-size-medium;
+    width: $icon-button-size-medium;
+  }
+
+  .fa {
+    @include absolute-center;
+    background: none;
+    color: $white;
+    line-height: $icon-button-size;
+    z-index: 1;
+  }
+
+  span:not(.show-for-sr) {
+    @include absolute-center;
+    background-color: get-color(kt-mid-green);
+    display: block;
+    height: $icon-button-size;
+    width: $icon-button-size;
+
+    @include breakpoint(medium) {
+      height: $icon-button-size-medium;
+      width: $icon-button-size-medium;
+    }
+  }
+
+  &:hover {
+
+    span:not(.show-for-sr) {
+      background-color: scale-color(get-color(kt-mid-green), $lightness: -15%);
+    }
+
+  }
+
+  &.facebook {
+
+    &:hover span:not(.show-for-sr) {
+      background-color: scale-color($social-brand-facebook, $lightness: -15%);
+    }
+
+    span:not(.show-for-sr) {
+      background-color: $social-brand-facebook;
+    }
+  }
+
+  &.twitter {
+
+    &:hover span:not(.show-for-sr) {
+      background-color: scale-color($social-brand-twitter, $lightness: -15%);
+    }
+
+    span:not(.show-for-sr) {
+      background-color: $social-brand-twitter;
+    }
+  }
+
+  &.youtube {
+
+    &:hover span:not(.show-for-sr) {
+      background-color: scale-color($social-brand-youtube, $lightness: -15%);
+    }
+
+    span:not(.show-for-sr) {
+      background-color: $social-brand-youtube;
+    }
+  }
+
+  &.instagram {
+
+    &:hover span:not(.show-for-sr) {
+      background-color: scale-color($social-brand-instagram, $lightness: -15%);
+    }
+
+    span:not(.show-for-sr) {
+     background-color: $social-brand-instagram;
+    }
+  }
+
+}
+
+// .inline-content
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.inline-content {
+  display: inline;
+}

@@ -1,0 +1,19 @@
+{
+    "name": "Scott Ainslie MEP",
+    "short_name": "Scott Ainslie MEP",
+    "icons": [
+        {
+            "src": "/themes/kt/android-chrome-192x192.png?v=M4yaoLKvgg",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/themes/kt/android-chrome-256x256.png?v=M4yaoLKvgg",
+            "sizes": "256x256",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#6ab023",
+    "background_color": "#6ab023",
+    "display": "standalone"
+}

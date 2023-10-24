@@ -1,0 +1,202 @@
+// Elements
+//
+// Things to review before you write code here:
+// - Be sure to load after "foundation" import.
+// - Also, before adding styles be sure to modify variables in the
+//   "base/_common.scss" file. You may not need to write any code.
+
+// Headings
+//------------------------------------------
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: get-color(kt-mid-green);
+}
+
+h1.title-highlight-pink {
+  background-color: get-color(kt-pink);
+  color: $white;
+  display: inline-block;
+  padding: rem-calc(0 8);
+}
+
+h2.title-highlight-purple {
+  background-color: get-color(kt-purple);
+  color: $white;
+  display: inline-block;
+  padding: rem-calc(0 8);
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-family: $body-font-family;
+}
+
+h3,
+h4 {
+  font-weight: $global-weight-bold;
+}
+
+// Anchors
+//-----------------------------------------------------------------------------
+// a {}
+
+// a:focus {}
+
+// a.active,
+// a:active,
+// a:hover {}
+
+// Form Input
+//-----------------------------------------------------------------------------
+// input[type="text"],
+// input[type="password"],
+// input[type="date"],
+// input[type="datetime"],
+// input[type="datetime-local"],
+// input[type="month"],
+// input[type="week"],
+// input[type="email"],
+// input[type="number"],
+// input[type="search"],
+// input[type="tel"],
+// input[type="time"],
+// input[type="url"],
+// textarea {
+// }
+
+// input[type="text"],
+// input[type="password"],
+// input[type="date"],
+// input[type="datetime"],
+// input[type="datetime-local"],
+// input[type="month"],
+// input[type="week"],
+// input[type="email"],
+// input[type="number"],
+// input[type="search"],
+// input[type="tel"],
+// input[type="time"],
+// input[type="url"],
+// textarea {
+
+// }
+
+// select {}
+
+input,
+textarea {
+
+  &::-webkit-input-placeholder {
+    color: $input-placeholder-color;
+  }
+
+  &:-moz-placeholder { /* Firefox 18- */
+    color: $input-placeholder-color;
+    opacity: 1;
+  }
+
+  &::-moz-placeholder { /* Firefox 19+ */
+    color: $input-placeholder-color;
+    opacity: 1;
+  }
+
+  &:-ms-input-placeholder {
+    color: $input-placeholder-color;
+  }
+}
+
+legend {
+  color: get-color(kt-dark-green);
+  font-family: $header-font-family;
+  font-size: rem-calc(map-deep-get($header-styles, small, h3, font-size));
+  @include breakpoint(medium) {
+    font-size: rem-calc(map-deep-get($header-styles, medium, h3, font-size));
+  }
+  line-height: $header-lineheight;
+  margin-bottom: $header-margin-bottom;
+}
+
+.checkbox-container {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  color: $anchor-color;
+  cursor: pointer;
+  display: block;
+  font-size: $body-font-size;
+  line-height: 1;
+  margin-bottom: rem-calc(8);
+  padding-left: rem-calc(20);
+  position: relative;
+  user-select: none;
+
+  &:hover {
+    color: $anchor-color-hover;
+
+    input ~ .checkmark {
+      background-color: get-color(kt-grey);
+    }
+  }
+
+  &:focus {
+    color: $anchor-color-hover;
+  }
+
+  &.active {
+    text-decoration: underline;
+  }
+
+  input {
+    cursor: pointer;
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+
+    &:checked ~ .checkmark {
+      background-color: get-color(kt-pink);
+    }
+
+    &:checked ~ .checkmark::after {
+      display: block;
+    }
+  }
+
+  .checkmark {
+    background-color: get-color(kt-light-grey);
+    height: $body-font-size;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: background-color .25s ease-out;
+    width: $body-font-size;
+
+    &::after {
+      content: '';
+      display: none;
+      position: absolute;
+    }
+  }
+}
+
+// .wide-columns
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.wide-columns {
+
+  @include breakpoint(medium) {
+    @include grid-column-wide-gutter;
+  }
+}
+
+// .narrow-columns
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.narrow-columns {
+  @include grid-column-narrow-gutter;
+}
+
+

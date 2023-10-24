@@ -1,0 +1,28 @@
+// Non-modular or client styles for asides or sidebars.
+
+// aside
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+aside {
+
+  .callout {
+    background-color: get-color(kt-mid-green);
+    color: $white;
+
+    h2 {
+      color: $white;
+    }
+
+    p {
+      color: get-color(kt-dark-green);
+    }
+
+    li {
+      display: inline-block;
+      padding-right: $global-padding / 2;
+
+      &:last-of-type {
+        padding-right: 0;
+      }
+    }
+  }
+}

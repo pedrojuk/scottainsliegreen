@@ -1,0 +1,156 @@
+// Non-modular or client styles for the .l-content region.
+
+// .key-issues
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.key-issues {
+  position: relative;
+
+  a {
+    display: block;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+
+      .key-issue-overlay {
+        opacity: .5;
+      }
+    }
+  }
+
+  &.kt-mid-green {
+    background-color: get-color(kt-mid-green);
+
+    .key-issue-title,
+    .key-issue-overlay {
+      background-color: get-color(kt-mid-green);
+    }
+  }
+
+  &.kt-dark-green {
+    background-color: get-color(kt-dark-green);
+
+    .key-issue-title,
+    .key-issue-overlay {
+      background-color: get-color(kt-dark-green);
+    }
+  }
+
+  &.kt-light-green {
+    background-color: get-color(kt-light-green);
+
+    .key-issue-title,
+    .key-issue-overlay {
+      background-color: get-color(kt-light-green);
+    }
+  }
+
+  &.kt-pink {
+    background-color: get-color(kt-pink);
+
+    .key-issue-title,
+    .key-issue-overlay {
+      background-color: get-color(kt-pink);
+    }
+  }
+
+  &.kt-yellow {
+    background-color: get-color(kt-yellow);
+
+    .key-issue-title,
+    .key-issue-overlay {
+      background-color: get-color(kt-yellow);
+    }
+  }
+
+  &.kt-purple {
+    background-color: get-color(kt-purple);
+
+    .key-issue-title,
+    .key-issue-overlay {
+      background-color: get-color(kt-purple);
+    }
+  }
+
+  .key-issue-title {
+    @include vertical-center;
+    width: 100%;
+    z-index: 1;
+  }
+
+  h3 {
+    color: $white;
+    font-family: $header-font-family;
+    font-weight: $header-font-weight;
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+  .key-issue-image {
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .key-issue-overlay {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .25s ease-out;
+    width: 100%;
+  }
+}
+
+// .field-name-field-download
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.field-name-field-download {
+  font-family: $header-font-family;
+  font-size: rem-calc(map-deep-get($header-styles, small, h3, font-size));
+  @include breakpoint(medium) {
+    font-size: rem-calc(map-deep-get($header-styles, medium, h3, font-size));
+  }
+  text-transform: uppercase;
+
+  a {
+    color: get-color(kt-pink);
+    text-decoration: underline;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+}
+
+// .node--type-article
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.node--type-article:not(.section-keith) {
+
+  .block-kt-page-title h1 {
+    font-family: $body-font-family;
+    font-size: rem-calc(map-deep-get($header-styles, small, h4, font-size));
+    @include breakpoint(medium) {
+      font-size: rem-calc(map-deep-get($header-styles, medium, h4, font-size));
+    }
+    font-weight: $global-weight-bold;
+  }
+}
+
+// .path-search
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.path-search {
+
+  .block-kt-content h2 {
+    font-family: $body-font-family;
+    font-size: rem-calc(map-deep-get($header-styles, small, h3, font-size));
+    @include breakpoint(medium) {
+      font-size: rem-calc(map-deep-get($header-styles, medium, h3, font-size));
+    }
+    font-weight: $global-weight-bold;
+  }
+}

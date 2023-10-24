@@ -1,0 +1,36 @@
+// @file
+// Place your mixins here. Feel free to roll your own mixins.
+
+// Add extra wide gutters on a column
+@mixin grid-column-wide-gutter(
+  $gutter: auto,
+  $gutters: $grid-column-gutter
+) {
+  @include -zf-breakpoint-value($gutter, $gutters) {
+    $padding: rem-calc($-zf-bp-value);
+
+    padding-left: $padding;
+    padding-right: $padding;
+  }
+}
+
+// Add extra narrow gutters on a column
+@mixin grid-column-narrow-gutter(
+  $gutter: auto,
+  $gutters: $grid-column-gutter
+) {
+  @include -zf-breakpoint-value($gutter, $gutters) {
+    $padding: rem-calc(rem-calc($-zf-bp-value) / 2) / 2;
+
+    padding-left: $padding;
+    padding-right: $padding;
+  }
+}
+
+// Add separator between elements
+@mixin add-separator($element, $separator, $padding) {
+  #{$element+'+'+$element}:before {
+    content: $separator;
+    padding: 0 $padding;
+  }
+}

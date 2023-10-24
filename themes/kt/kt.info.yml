@@ -1,0 +1,59 @@
+name: kt
+description: "Custom sub-theme, inherits from the Foundation base theme read <a href=\"http://foundation.zurb.com/docs/index.php\">framework documentation</a>"
+core: 8.x
+type: theme
+base theme: zurb_foundation
+
+# Image appears on admin/appearance
+# screenshot: images/screenshot.jpg
+
+# Uncomment these lines and change "kt" to your theme name if you
+# need to add custom CSS or JS
+libraries:
+ - kt/global
+
+libraries-override:
+  # Replace an asset with another.
+  zurb_foundation/global:
+    css:
+      base:
+        css/foundation.min.css: foundation_assets/css/foundation.min.css
+    js:
+      js/foundation.min.js: foundation_assets/js/foundation.min.js
+
+# Regions are output in the page.html.twig
+
+regions:
+  meta_header: 'Meta Header'
+  header_branding: 'Header branding'
+  header_search: 'Header search'
+  header: Header
+  help: Help
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  highlighted: Highlighted
+  content: Content
+  sidebar: 'Sidebar'
+  sidebar_first: 'Left Sidebar'
+  sidebar_second: 'Right Sidebar'
+  footer_first: 'Footer first column'
+  footer_middle: 'Footer middle column'
+  footer_last: 'Footer last column'
+  footer_links: 'Footer links'
+  left_off_canvas: 'Left off canvas'
+  right_off_canvas: 'Right off canvas'
+regions_hidden:
+  page_top: 'Page Top'
+  page_bottom: 'Page bottom'
+
+# Hidden regions
+# regions_hidden[]: Page top
+# regions_hidden[]: Page bottom
+
+features:
+  - logo
+  - name
+  - slogan
+  - favicon
+  - comment_user_picture
+  - node_user_picture

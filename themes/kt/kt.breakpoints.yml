@@ -1,0 +1,35 @@
+kt.small:
+  label: small
+  mediaQuery: 'screen and (max-width: 39.9375em)'
+  weight: 0
+  multipliers:
+  - 1x
+  - 2x
+kt.medium:
+  label: medium
+  mediaQuery: 'screen and (min-width: 40em) and (max-width: 63.9375em)'
+  weight: 1
+  multipliers:
+  - 1x
+  - 2x
+kt.large:
+  label: large
+  mediaQuery: 'screen and (min-width: 64em) and (max-width: 74.9375em)'
+  weight: 2
+  multipliers:
+  - 1x
+  - 2x
+kt.xlarge:
+  label: xlarge
+  mediaQuery: 'screen and (min-width: 75em) and (max-width: 89.9375em)'
+  weight: 3
+  multipliers:
+  - 1x
+  - 2x
+kt.xxlarge:
+  label: xxlarge
+  mediaQuery: 'screen and (min-width: 90em)'
+  weight: 4
+  multipliers:
+  - 1x
+  - 2x

@@ -1,0 +1,365 @@
+{#
+/**
+ * @file
+ * Zurb Foundations's theme implementation to display a single page.
+ *
+ * Available variables:
+ *
+ * General utility variables:
+ * - base_path: The base URL path of the Drupal installation. Will usually be
+ *   "/" unless you have installed Drupal in a sub-directory.
+ * - is_front: A flag indicating if the current page is the front page.
+ * - logged_in: A flag indicating if the user is registered and signed in.
+ * - is_admin: A flag indicating if the user has permission to access
+ *   administration pages.
+ *
+ * Site identity:
+ * - front_page: The URL of the front page. Use this instead of base_path when
+ *   linking to the front page. This includes the language domain or prefix.
+ * - logo: The url of the logo image, as defined in theme settings.
+ * - linked_logo: The logo image, linked to <front>.
+ * - site_name: The name of the site. This is empty when displaying the site
+ *   name has been disabled in the theme settings.
+ * - linked_site_name: The name of the site that also links to <front>.
+ * - site_slogan: The slogan of the site. This is empty when displaying the site
+ *   slogan has been disabled in theme settings.
+ * - hide_site_name: A flag indicating if the site name has been toggled off on
+ *   the theme settings page. If hidden, the "visually-hidden" class is added
+ *   to make the site name visually hidden, but still accessible.
+ * - hide_site_slogan: A flag indicating if the site slogan has been toggled off
+ *   on the theme settings page. If hidden, the "visually-hidden" class is
+ *   added to make the site slogan visually hidden, but still accessible.
+ *
+ * Page content (in order of occurrence in the default page.html.twig):
+ * - messages: Status and error messages. Should be displayed prominently.
+ * - node: Fully loaded node, if there is an automatically-loaded node
+ *   associated with the page and the node ID is the second argument in the
+ *   page's path (e.g. node/12345 and node/12345/revisions, but not
+ *   comment/reply/12345).
+ *
+ * Regions:
+ * - page.meta_header
+ * - page.header
+ * - page.help
+ * - page.highlighted
+ * - page.content
+ * - page.sidebar_first
+ * - page.sidebar_second
+ * - page.footer_first
+ * - page.footer_middle
+ * - page.footer_last
+ *
+ * @see template_preprocess_page()
+ * @see bartik_preprocess_page()
+ * @see html.html.twig
+ */
+#}
+
+<div class="off-canvas-wrapper">
+  <div class="inner-wrap off-canvas-wrapper-inner" id="inner-wrap" data-off-canvas-wrapper>
+    <aside id="left-off-canvas-menu" class="off-canvas left-off-canvas-menu position-left" role="complementary" data-off-canvas>
+      {{ page.left_off_canvas }}
+    </aside>
+
+    <aside id="right-off-canvas-menu" class="off-canvas right-off-canvas-menu position-right" role="complementary" data-off-canvas>
+      {{ page.right_off_canvas }}
+    </aside>
+
+    <div class="off-canvas-content" data-off-canvas-content>
+      {% if page.meta_header %}
+        {% if meta_header_grid %}
+          <div class="row">
+            <div class="large-12 columns">
+        {% endif %}
+        {{ page.meta_header }}
+        {% if meta_header_grid %}
+            </div>
+          </div>
+        {% endif %}
+      {% endif %}
+
+      <header class="row" role="banner" aria-label="{{ 'Site header'|t }}">
+        {% if linked_site_name or linked_logo %}
+          <div class="large-2 columns">
+            {% if linked_logo %}
+              {{ linked_logo }}
+            {% endif %}
+          </div>
+          <div class="left large-4 columns">
+            {% if is_front %}
+              <h1 id="site-name">{{ linked_site_name }}</h1>
+            {% else %}
+              <div id="site-name">{{ linked_site_name }}</div>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if page.header_branding or page.header_search and page.header %}
+          <div class="medium-12 columns">
+            {% if page.header_branding or page.header_search %}
+              <div class="callout">
+                <div class="row">
+                  {% if page.header_branding %}
+                    <div class="medium-7 columns hide-for-print">
+                      {{ page.header_branding }}
+                    </div>
+                    <div class="medium-12 columns show-for-print">
+                      {{ page.header_branding }}
+                    </div>
+                  {% endif %}
+                  {% if page.header_search %}
+                    <div class="show-for-medium medium-5 columns hide-for-print">
+                      {{ page.header_search }}
+                    </div>
+                  {% else %}
+                    <div class="show-for-medium medium-5 columns hide-for-print">
+                      <div class="text-right">
+                        <a href="/search/node" class="icon-button" title="{{ 'Search for content'|t }}"><i class="fa fa-search" aria-hidden="true"></i><span></span></a>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+            {% if page.header %}
+              <div class="row">
+                <div class="medium-12 columns">
+                  {{ page.header }}
+                </div>
+              </div>
+            {% endif %}
+            {% if is_front %}
+              <div class="row">
+                <div class="medium-12 columns">
+                  <div class="hero-image">
+                    <div class="hide-for-medium">
+                      <picture>
+                        <!--[if IE 9]><video style="display: none;"><![endif]-->
+                        <source srcset="/themes/kt/images/front_hero/hero_mobile.jpg 1x, /themes/kt/images/front_hero_2x/hero_mobile_2x.jpg 2x" media="screen and (min-width: 90em)" type="image/jpeg">
+                        <source srcset="/themes/kt/images/front_hero/hero_mobile.jpg 1x, /themes/kt/images/front_hero_2x/hero_mobile_2x.jpg 2x" media="screen and (min-width: 75em) and (max-width: 89.9375em)" type="image/jpeg">
+                        <source srcset="/themes/kt/images/front_hero/hero_mobile.jpg 1x, /themes/kt/images/front_hero_2x/hero_mobile_2x.jpg 2x" media="screen and (min-width: 64em) and (max-width: 74.9375em)" type="image/jpeg">
+                        <source srcset="/themes/kt/images/front_hero/hero_mobile.jpg 1x, /themes/kt/images/front_hero_2x/hero_mobile_2x.jpg 2x" media="screen and (min-width: 40em) and (max-width: 63.9375em)" type="image/jpeg">
+                        <source srcset="/themes/kt/images/front_hero/hero_mobile.jpg 1x, /themes/kt/images/front_hero_2x/hero_mobile_2x.jpg 2x" media="screen and (max-width: 39.9375em)" type="image/jpeg">
+                        <!--[if IE 9]></video><![endif]-->
+                        <img alt="Scott Ainslie MEP">
+                      </picture>
+                    </div>
+                    <div class="show-for-medium hero-image-background">
+                      <picture>
+                        <!--[if IE 9]><video style="display: none;"><![endif]-->
+                        <source srcset="/themes/kt/images/front_hero/hero_desktop_background.jpg 1x, /themes/kt/images/front_hero_2x/hero_desktop_background_2x.jpg 2x" media="screen and (min-width: 90em)" type="image/jpeg">
+                        <source srcset="/themes/kt/images/front_hero/hero_desktop_background.jpg 1x, /themes/kt/images/front_hero_2x/hero_desktop_background_2x.jpg 2x" media="screen and (min-width: 75em) and (max-width: 89.9375em)" type="image/jpeg">
+                        <source srcset="/themes/kt/images/front_hero/hero_desktop_background.jpg 1x, /themes/kt/images/front_hero_2x/hero_desktop_background_2x.jpg 2x" media="screen and (min-width: 64em) and (max-width: 74.9375em)" type="image/jpeg">
+                        <source srcset="/themes/kt/images/front_hero/hero_desktop_background.jpg 1x, /themes/kt/images/front_hero_2x/hero_desktop_background_2x.jpg 2x" media="screen and (min-width: 40em) and (max-width: 63.9375em)" type="image/jpeg">
+                        <source srcset="/themes/kt/images/front_hero/hero_desktop_background.jpg 1x, /themes/kt/images/front_hero_2x/hero_desktop_background_2x.jpg 2x" media="screen and (max-width: 39.9375em)" type="image/jpeg">
+                        <!--[if IE 9]></video><![endif]-->
+                        <img alt="Scott Ainslie MEP">
+                      </picture>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </header>
+
+      {% if messages and not zurb_foundation_messages_modal %}
+      <div class="l-messages row">
+        <div class="large-12 columns">
+          {{ messages }}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if page.help %}
+      <div class="l-help row">
+        <div class="large-12 columns">
+          {{ page.help }}
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="row">
+        <div class="medium-12 columns wide-columns">
+
+          <div class="row">
+            {% if page.highlighted %}
+              <div class="medium-12 columns">
+                <section>
+                  {% spaceless %}
+                    {{ page.highlighted }}
+                  {% endspaceless %}
+                </section>
+              </div>
+            {% endif %}
+            <main id="main" class="medium-9 columns hide-for-print" role="main">
+              <a id="main-content"></a>
+              {% if breadcrumb %} {{ breadcrumb }} {% endif %}
+              <section>
+                {{ page.content }}
+              </section>
+            </main>
+            <main id="main" class="medium-12 columns show-for-print" role="main">
+              <a id="main-content"></a>
+              {% if breadcrumb %} {{ breadcrumb }} {% endif %}
+              <section>
+                {{ page.content }}
+              </section>
+            </main>
+            <aside class="show-for-medium medium-3 columns hide-for-print">
+              {% if page.sidebar %}
+                <div class="row">
+                  <div class="medium-12 columns">
+                    {{ page.sidebar }}
+                  </div>
+                </div>
+              {% endif %}
+            </aside>
+            {% if page.sidebar_first %}
+              <div id="sidebar-first" class="{{ sidebar_first_grid }} columns sidebar">
+                {{ page.sidebar_first }}
+              </div>
+            {% endif %}
+            {% if page.sidebar_second %}
+              <div id="sidebar-second" class="{{ sidebar_sec_grid }} columns sidebar">
+                {{ page.sidebar_second }}
+              </div>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+
+      {% if page.footer_first or page.footer_middle or page.footer_last %}
+        <footer class="row">
+          {% if page.footer_first %}
+            <div id="footer-first" class="large-4 columns">
+              {{ page.footer_first }}
+            </div>
+          {% endif %}
+          {% if page.footer_middle %}
+            <div id="footer-middle" class="large-4 columns">
+              {{ page.footer_middle }}
+            </div>
+          {% endif %}
+          {% if page.footer_last %}
+            <div id="footer-last" class="large-4 columns">
+              {{ page.footer_last }}
+            </div>
+          {% endif %}
+        </footer>
+      {% endif %}
+
+      <div class="bottom-bar row">
+        <div class="medium-12 columns">
+          <div class="callout">
+            <div class="row">
+              <div class="medium-9 columns hide-for-print">
+                {% if page.sign_up %}
+                  <div class="row">
+                    <div class="medium-5 columns end">
+                      <h2>{{ 'Subscribe to the Newsletter'|t }}</h2>
+                      <p>{{ 'Receive updates from Scott by adding your email to our mailing list, click on the button below to subscribe to the newsletter.'|t }}</p>
+                      {{ page.sign_up }}
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="medium-3 columns hide-for-print">
+                <h2>{{ 'Follow Scott'|t }}</h2>
+                <ul class="no-bullet social-links">
+                  <li><a href="https://www.facebook.com/ScottMEPLondon/" title="{{ 'Scott Ainslie\'s Facebook page'|t }}" class="icon-button facebook" target="_blank"><i class="fa fa-facebook" aria-hidden="true"><span class="show-for-sr">{{ site_name }}{{ '\'s Facebook page'|t }}</span></i><span></span></a></li>
+                  <li><a href="https://twitter.com/scottmeplondon?lang=en" title="{{ 'Scott Ainslie\'s Twitter feed'|t }}" class="icon-button twitter" target="_blank"><i class="fa fa-twitter" aria-hidden="true"><span class="show-for-sr">{{ site_name }}{{ '\'s Twitter feed'|t }}</span></i><span></span></a></li>
+                  <li><a href="https://www.youtube.com/channel/UCFT-ln6xOnMFE983Rpt13dA/featured" title="{{ 'Scott Ainslie\'s YouTube channel'|t }}" class="icon-button youtube" target="_blank"><i class="fa fa-youtube" aria-hidden="true"><span class="show-for-sr">{{ site_name }}{{ '\'s YouTube channel'|t }}</span></i><span></span></a></li>
+                  <li><a href="https://www.instagram.com/scott.ainslie.73/" title="{{ 'Scott Ainslie\'s Instagram page'|t }}" class="icon-button instagram" target="_blank"><i class="fa fa-instagram" aria-hidden="true"><span class="show-for-sr">{{ site_name }}{{ '\'s Instagram page'|t }}</span></i><span></span></a></li>
+                </ul>
+              </div>
+              <div class="medium-12 columns show-for-print">
+                <h2>{{ 'Follow Scott'|t }}</h2>
+                <ul class="no-bullet">
+                  <li><a href="https://www.facebook.com/ScottMEPLondon/" title="{{ 'Scott Ainslie\'s Facebook page'|t }}" target="_blank">{{ site_name }}{{ '\'s Facebook page'|t }}</a></li>
+                  <li><a href="https://twitter.com/scottmeplondon?lang=en" title="{{ 'Scott Ainslie\'s Twitter feed'|t }}" target="_blank">{{ site_name }}{{ '\'s Twitter feed'|t }}</a></li>
+                  <li><a href="https://www.youtube.com/channel/UCFT-ln6xOnMFE983Rpt13dA/featured" title="{{ 'Scott Ainslie\'s YouTube channel'|t }}" target="_blank">{{ site_name }}{{ '\'s YouTube channel'|t }}</a></li>
+                  <li><a href="https://www.instagram.com/scott.ainslie.73/" title="{{ 'Scott Ainslie\'s Instagram page'|t }}" target="_blank">{{ site_name }}{{ '\'s Instagram page'|t }}</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="row">
+              <div class="medium-9 columns hide-for-print">
+                <ul class="no-bullet logos">
+                  {% spaceless %}
+                    <li><a href="https://www.greenparty.org.uk/" title="{{ 'Green Party\'s website'|t }}" target="_blank">
+                        <picture>
+                          <!--[if IE 9]><video style="display: none;"><![endif]-->
+                          <source srcset="/themes/kt/images/gp_strap_logo.png 1x, /themes/kt/images/gp_strap_logo_2x.png 2x" media="screen and (min-width: 90em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/gp_strap_logo.png 1x, /themes/kt/images/gp_strap_logo_2x.png 2x" media="screen and (min-width: 75em) and (max-width: 89.9375em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/gp_strap_logo.png 1x, /themes/kt/images/gp_strap_logo_2x.png 2x" media="screen and (min-width: 64em) and (max-width: 74.9375em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/gp_strap_logo.png 1x, /themes/kt/images/gp_strap_logo_2x.png 2x" media="screen and (min-width: 40em) and (max-width: 63.9375em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/gp_strap_logo.png 1x, /themes/kt/images/gp_strap_logo_2x.png 2x" media="screen and (max-width: 39.9375em)" type="image/jpeg">
+                          <!--[if IE 9]></video><![endif]-->
+                          <img alt="{{ 'Green Party logo'|t }}">
+                        </picture></a></li>
+                    <li><picture>
+                          <!--[if IE 9]><video style="display: none;"><![endif]-->
+                          <source srcset="/themes/kt/images/efa_logo_en.jpg 1x, /themes/kt/images/efa_logo_en_2x.jpg 2x" media="screen and (min-width: 90em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/efa_logo_en.jpg 1x, /themes/kt/images/efa_logo_en_2x.jpg 2x" media="screen and (min-width: 75em) and (max-width: 89.9375em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/efa_logo_en.jpg 1x, /themes/kt/images/efa_logo_en_2x.jpg 2x" media="screen and (min-width: 64em) and (max-width: 74.9375em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/efa_logo_en.jpg 1x, /themes/kt/images/efa_logo_en_2x.jpg 2x" media="screen and (min-width: 40em) and (max-width: 63.9375em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/efa_logo_en.jpg 1x, /themes/kt/images/efa_logo_en_2x.jpg 2x" media="screen and (max-width: 39.9375em)" type="image/jpeg">
+                          <!--[if IE 9]></video><![endif]-->
+                          <img alt="{{ 'The Greens | European Free Alliance logo'|t }}">
+                        </picture></li>
+                  {% endspaceless %}
+                </ul>
+              </div>
+              <div class="medium-12 columns show-for-print">
+                <ul class="no-bullet">
+                  {% spaceless %}
+                    <li><a href="https://www.greenparty.org.uk/" title="{{ 'Green Party\'s website'|t }}" target="_blank">
+                        <picture>
+                          <!--[if IE 9]><video style="display: none;"><![endif]-->
+                          <source srcset="/themes/kt/images/gp_strap_logo.png 1x, /themes/kt/images/gp_strap_logo_2x.png 2x" media="screen and (min-width: 90em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/gp_strap_logo.png 1x, /themes/kt/images/gp_strap_logo_2x.png 2x" media="screen and (min-width: 75em) and (max-width: 89.9375em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/gp_strap_logo.png 1x, /themes/kt/images/gp_strap_logo_2x.png 2x" media="screen and (min-width: 64em) and (max-width: 74.9375em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/gp_strap_logo.png 1x, /themes/kt/images/gp_strap_logo_2x.png 2x" media="screen and (min-width: 40em) and (max-width: 63.9375em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/gp_strap_logo.png 1x, /themes/kt/images/gp_strap_logo_2x.png 2x" media="screen and (max-width: 39.9375em)" type="image/jpeg">
+                          <!--[if IE 9]></video><![endif]-->
+                          <img alt="{{ 'Green Party logo'|t }}">
+                        </picture></a></li>
+                    <li><a href="https://www.greens-efa.eu/en/" title="{{ 'The Greens | European Free Alliance\'s website'|t }}" target="_blank">
+                        <picture>
+                          <!--[if IE 9]><video style="display: none;"><![endif]-->
+                          <source srcset="/themes/kt/images/efa_logo_en.jpg 1x, /themes/kt/images/efa_logo_en_2x.jpg 2x" media="screen and (min-width: 90em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/efa_logo_en.jpg 1x, /themes/kt/images/efa_logo_en_2x.jpg 2x" media="screen and (min-width: 75em) and (max-width: 89.9375em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/efa_logo_en.jpg 1x, /themes/kt/images/efa_logo_en_2x.jpg 2x" media="screen and (min-width: 64em) and (max-width: 74.9375em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/efa_logo_en.jpg 1x, /themes/kt/images/efa_logo_en_2x.jpg 2x" media="screen and (min-width: 40em) and (max-width: 63.9375em)" type="image/jpeg">
+                          <source srcset="/themes/kt/images/efa_logo_en.jpg 1x, /themes/kt/images/efa_logo_en_2x.jpg 2x" media="screen and (max-width: 39.9375em)" type="image/jpeg">
+                          <!--[if IE 9]></video><![endif]-->
+                          <img alt="{{ 'The Greens | European Free Alliance logo'|t }}">
+                        </picture></a></li>
+                  {% endspaceless %}
+                </ul>
+              </div>
+              <div class="medium-3 columns hide-for-print">
+                <div class="text-small-content">
+                  {% if page.footer_links %}
+                    {{ page.footer_links }}
+                  {% endif %}
+                  <div class="designed-by"><small>{{ 'designed by'|t }} <a href="https://bwa.design/?utm_source=keithtaylormep.org.uk&utm_medium=Footer&utm_campaign=keithtaylormep.org.uk+Footer" target="_blank">{{ '<b>bwa</b>.design'|t }}</a></small></div>
+                </div>
+              </div>
+              <div class="medium-12 columns show-for-print">
+                <div class="text-small-content">
+                  {% if page.footer_links %}
+                    {{ page.footer_links }}
+                  {% endif %}
+                  <div class="designed-by"><small>{{ 'designed by'|t }} <a href="https://bwa.design/" target="_blank">{{ '<b>bwa</b>.design'|t }}</a></small></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

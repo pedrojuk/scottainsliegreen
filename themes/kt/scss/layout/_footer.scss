@@ -1,0 +1,53 @@
+// Non-modular or client styles for .l-footer region.
+
+// .bottom-bar
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.bottom-bar {
+  margin-bottom: rem-calc(32);
+
+  @include breakpoint(medium) {
+    margin-bottom: 0;
+  }
+
+  .callout {
+    background-color: get-color(kt-mid-green);
+    color: $white;
+
+    h2 {
+      color: $white;
+    }
+
+    a {
+      color: $white;
+
+      &:hover,
+      &:focus {
+        color: $anchor-color-hover;
+      }
+    }
+
+    p {
+      color: get-color(kt-dark-green);
+    }
+
+    .social-links li,
+    .logos li {
+      display: inline-block;
+    }
+
+    @include breakpoint(medium) {
+      .logos,
+      .text-small-content {
+        margin-top: $global-margin * 2;
+      }
+    }
+
+    .social-links li {
+      padding-right: $global-padding / 2;
+
+      &:last-of-type {
+        padding-right: 0;
+      }
+    }
+  }
+}

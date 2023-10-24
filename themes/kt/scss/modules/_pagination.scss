@@ -1,0 +1,34 @@
+// .pagination
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.pagination {
+  color: $anchor-color-hover;
+  font-family: $header-font-family;
+  font-size: rem-calc(map-deep-get($header-styles, small, h4, font-size));
+  @include breakpoint(medium) {
+    font-size: rem-calc(map-deep-get($header-styles, medium, h4, font-size));
+  }
+  text-transform: uppercase;
+
+  ul {
+    list-style-type: none;
+    margin-left: 0;
+  }
+
+  .current a {
+    color: $anchor-color-hover;
+
+    &:hover,
+    &:focus {
+      color: $anchor-color;
+    }
+  }
+
+  a {
+    color: $anchor-color;
+
+    &:hover,
+    &:focus {
+      color: $anchor-color-hover;
+    }
+  }
+}

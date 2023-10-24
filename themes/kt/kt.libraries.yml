@@ -1,0 +1,13 @@
+global:
+  version: VERSION
+  css:
+    base:
+      fonts/font_awesome/css/font-awesome.min.css: { minified: true }
+      fonts/bebas_neue/css/bebas-neue.css: { minified: false }
+      css/kt.css: {}
+  js:
+    js/kt.js: {}
+    '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5aa27dec3a89fdf0': { type: external, attributes: { async: true } }
+  dependencies:
+    - core/drupal
+    - core/jquery

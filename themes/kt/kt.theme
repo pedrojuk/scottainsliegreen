@@ -1,0 +1,328 @@
+<?php
+
+// Add your custom theme override functions here.
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_preprocess().
+ */
+function kt_preprocess(&$variables) {
+    // Set a variable based on the path.matcher.
+    if (!isset($variables['is_front'])) {
+        try {
+            $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+        }
+        catch (\Exception $e) {
+            $variables['is_front'] = FALSE;
+        }
+    }
+
+    // Ensure the cache varies correctly.
+    $variables['#cache']['contexts'][] = 'url.path.is_front';
+}
+
+/**
+ * Implements hook_preprocess_block()
+ */
+function kt_preprocess_block(&$variables) {
+}
+
+/**
+ * Implements template_preprocess_field().
+ */
+function kt_preprocess_field(&$variables, $hook) {
+    $element = $variables['element'];
+
+    if (isset($element['#field_name'])) {
+        if ($element['#field_name'] == 'field_download') {
+            $variables['items'][0]['content']['#description'] = t('Download');
+        }
+    }
+}
+
+/**
+ * Implements template_preprocess_html().
+ *
+ * Adds additional classes
+ */
+function kt_preprocess_html(&$variables) {
+}
+
+/**
+ * Implements template_preprocess_node
+ *
+ * Add template suggestions and classes
+ */
+function kt_preprocess_node(&$variables) {
+    $node = $variables['elements']['#node'];
+    $view_mode = $variables['elements']['#view_mode'];
+    $variables['date'] = \Drupal::service('date.formatter')->format($variables['node']->getCreatedTime(), 'node_date');
+
+    if($node->getType() == 'article' && $view_mode == 'teaser') {
+        // Set display options.
+        $display_options = [
+            'label'    => 'hidden',
+            'type'     => 'responsive_image',
+            'settings' => [
+                'responsive_image_style' => 'preview_image_small',
+            ],
+        ];
+
+        // Get image, apply display options.
+        $image = $node->get('field_preview_image')->view($display_options);
+
+        // Render image.
+        $variables['small_preview_image'] = render($image);
+    }
+}
+
+/**
+ * Implements hook_preprocess_search_result().
+ */
+
+function kt_preprocess_search_result(&$variables) {
+    $node = $variables['result']['node'];
+    $variables['category'] = $node->get('field_categories')->entity->getName();
+
+    // Change the date displayed in search results
+    // to be the created date, not the updated date.
+    if (isset($variables['info_split']['date'])) {
+        $created = \Drupal::service('date.formatter')->format($node->getCreatedTime(), 'node_date');
+        // The date needs to be updated in two places.
+        $variables['info_split']['date'] = $created;
+        $variables['info']['#context']['info']['date'] = $created;
+    }
+}
+
+/**
+ * Implements template_preprocess_page
+ *
+ * Add convenience variables and template suggestions
+ */
+function kt_preprocess_page(&$variables) {
+    // Add classes to highlighted region.
+    if (!empty($variables['page']['highlighted'])) {
+        $variables['page']['highlighted']['#attributes']['class'] = array('region-highlighted');
+    }
+
+    // Add disabled 'Sign up' block to region.
+    $sign_up_block = \Drupal\block\Entity\Block::load('mailchimp_subscription_form_sign_up');
+    $sign_up_block_content = \Drupal::entityManager()
+                                    ->getViewBuilder('block')
+                                    ->view($sign_up_block);
+
+    $variables['page']['sign_up'][] = $sign_up_block_content;
+}
+
+/**
+ * Implements template_preprocess_views_view().
+ */
+function kt_preprocess_views_view(&$variables) {
+    $view = $variables['view'];
+    $view_name = $view->storage->id();
+
+    if($view_name === 'frontpage') {
+        $variables['more']['#url'] = Url::fromRoute('view.news.page_news');
+        $variables['more']['#theme_wrappers']['container']['#attributes']['class'] = 'more-link text-right';
+    }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function kt_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables) {
+    $elements = $variables['elements'];
+
+    if (isset($elements['#taxonomy_term'])) {
+        $term = $elements['#taxonomy_term'];
+
+        if (is_object($term) && $term->get('field_type')->value == 'key_issue') {
+            $term_name = Html::getClass($term->label());
+            $term_name_array = array(
+                'ldn♥eu',
+                'get-in-touch',
+                'european-parliament'
+            );
+
+            if(in_array($term_name, $term_name_array)) {
+                $hook = 'key_issues';
+                $suggestions[] = $variables['theme_hook_original'] . '__' . $hook;
+            }
+        }
+    }
+}
+
+/**
+ * Implements hook_theme_suggestions_field_alter()
+ */
+function kt_theme_suggestions_field_alter(&$suggestions, $variables) {
+    $element = $variables['element'];
+
+    $hook = $element['#entity_type'] . '__' . $element['#field_name'] . '__' . $element['#bundle'] . '__' . $element['#view_mode'];
+    $suggestions[] = $variables['theme_hook_original'] . '__' . $hook;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function kt_theme_suggestions_form_element_alter(array &$suggestions, array $variables) {
+    $element = $variables['element'];
+
+    if(isset($element['#attributes']['data-twig-suggestion'])) {
+        $hook = $element['#attributes']['data-twig-suggestion'];
+        $suggestions[] = $variables['theme_hook_original'] . '__' . $hook;
+    }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function kt_theme_suggestions_form_element_label_alter(array &$suggestions, array $variables) {
+    $element = $variables['element'];
+
+    if(isset($element['#attributes']['data-twig-suggestion'])) {
+        $hook = $element['#attributes']['data-twig-suggestion'];
+        $suggestions[] = $variables['theme_hook_original'] . '__' . $hook;
+    }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function kt_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+    if ($form_id == 'search_block_form') {
+        $key = ($form_id == 'search_block_form') ? 'actions' : 'basic';
+        if (!isset($form[$key]['submit']['#attributes'])) {
+            $form[$key]['submit']['#attributes'] = new Attribute();
+        }
+        // Add wrapper prefix
+        $form['keys']['#prefix'] = '<div class="input-group">';
+        // Add input class
+        $form['keys']['#attributes']['class'][] = 'input-group-field';
+        // Add placeholder text
+        $form['keys']['#attributes']['placeholder'] = t('Search...');
+
+        // Add wrapper prefix and suffix
+        $form[$key]['#prefix'] = '<span class="input-group-label"><i class="fa fa-search" aria-hidden="true"></i></span><div class="input-group-button hide">';
+        $form[$key]['#suffix'] = '</div></div>';
+    }
+
+    if ($form_id == 'search_form') {
+        // Add wrapper prefix
+        $form['#prefix'] = '<p>' . t('Enter keywords to search for.') . '</p>';
+
+        // Remove container classes
+        unset($form['basic']['#attributes']['class']);
+
+        // Remove field label
+        unset($form['basic']['keys']['#title']);
+
+        // Add placeholder text
+        $form['basic']['keys']['#attributes']['placeholder'] = t('Search...');
+
+        // Add submit button classes
+        $form['basic']['submit']['#attributes']['class'][] = 'kt-pink large';
+
+        // Add wrapper to align form submit to the right
+        $form['basic']['submit']['#prefix'] = '<div class="text-right">';
+        $form['basic']['submit']['#suffix'] = '</div>';
+    }
+
+    if ($form_id == 'mailchimp_signup_subscribe_block_sign_up_form') {
+        // Remove field label
+        unset($form['mergevars']['EMAIL']['#title']);
+
+        // Add placeholder text
+        $form['mergevars']['EMAIL']['#attributes']['placeholder'] = t('Email...');
+
+        // Add submit button classes
+        $form['actions']['submit']['#attributes']['class'][] = 'kt-dark-green large';
+    }
+
+    if ($form_id == 'views_exposed_form') {
+        $exposed_form_id_array = array_flip(array(
+            'views-exposed-form-news-page-news',
+            'views-exposed-form-publications-page-publications',
+            'views-exposed-form-taxonomy-term-page-tags',
+            'views-exposed-form-archive-page-archive'
+        ));
+
+        if(isset($form['#id']) && isset($exposed_form_id_array[$form['#id']])) {
+            if(isset($form['field_categories_target_id']['#options'])) {
+                foreach(array_keys($form['field_categories_target_id']['#options']) as $key) {
+                    $form['field_categories_target_id'][$key]['#field_suffix'] = '<span class="checkmark"></span>';
+                    $form['field_categories_target_id'][$key]['#title_display'] = 'before';
+                    $form['field_categories_target_id'][$key]['#attributes']['data-twig-suggestion'] = 'categories';
+                    $form['field_categories_target_id'][$key]['#label_attributes']['data-twig-suggestion'] = 'categories';
+                }
+            }
+            if(isset($form['field_tags_target_id']['#options'])) {
+                foreach(array_keys($form['field_tags_target_id']['#options']) as $key) {
+                    $form['field_tags_target_id'][$key]['#field_suffix'] = '<span class="checkmark"></span>';
+                    $form['field_tags_target_id'][$key]['#title_display'] = 'before';
+                    $form['field_tags_target_id'][$key]['#attributes']['data-twig-suggestion'] = 'tags';
+                    $form['field_tags_target_id'][$key]['#label_attributes']['data-twig-suggestion'] = 'tags';
+                }
+            }
+        }
+    }
+
+    if ($form_id == 'user_pass') {
+        // Add placeholder text
+        $form['name']['#attributes']['placeholder'] = $form['name']['#title'];
+
+        // Remove field labels
+        unset($form['name']['#title']);
+
+        // Change submit button classes
+        $form['actions']['submit']['#attributes']['class'][] = 'kt-dark-green large';
+    }
+}
+
+/**
+ * Implements hook_form_contact_message_get_in_touch_form_alter().
+ */
+function kt_form_contact_message_get_in_touch_form_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form_state, $form_id) {
+    // Add wrapper prefix and suffix
+    $form['#prefix'] = '<p>' . t('Drop Scott a line.') . '</p>';
+    $form['field_name']['#prefix'] = '<div class="row"><div class="medium-4 columns">';
+    $form['field_name']['#suffix'] = '</div>';
+    $form['field_email']['#prefix'] = '<div class="medium-4 columns">';
+    $form['field_email']['#suffix'] = '</div>';
+    $form['field_contact_number']['#prefix'] = '<div class="medium-4 columns">';
+    $form['field_contact_number']['#suffix'] = '</div></div>';
+
+    // Add pattern attribute for telephone validation
+    $form['field_contact_number']['widget'][0]['value']['#attributes']['pattern'] = '^[0-9\-\+\s\(\)]*$';
+
+    // Remove field labels
+    unset($form['field_name']['widget'][0]['value']['#title']);
+    unset($form['field_email']['widget'][0]['value']['#title']);
+    unset($form['field_contact_number']['widget'][0]['value']['#title']);
+    unset($form['field_message']['widget'][0]['value']['#title']);
+
+    // Add submit button classes
+    $form['actions']['submit']['#attributes']['class'][] = 'kt-pink large';
+
+    // Add wrapper to align form submit to the right
+    $form['actions']['submit']['#prefix'] = '<div class="text-right">';
+    $form['actions']['submit']['#suffix'] = '</div>';
+}
+
+/**
+ * Implements hook_form_user_login_form_alter().
+ */
+function kt_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form_state, $form_id) {
+    // Add placeholder text
+    $form['name']['#attributes']['placeholder'] = $form['name']['#title'];
+    $form['pass']['#attributes']['placeholder'] = $form['pass']['#title'];
+
+    // Remove field labels
+    unset($form['name']['#title']);
+    unset($form['pass']['#title']);
+
+    // Change submit button classes
+    $form['actions']['submit']['#attributes']['class'][] = 'kt-dark-green large';
+}

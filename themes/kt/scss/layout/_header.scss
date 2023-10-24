@@ -1,0 +1,37 @@
+// Non-modular or client styles for .l-header region.
+
+// header
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+header {
+  margin-bottom: $global-margin;
+
+  .callout {
+    background-color: get-color(kt-dark-green);
+    margin-bottom: 0;
+  }
+
+  @include breakpoint(medium) {
+
+    .sticky {
+
+      &.is-at-top {
+        z-index: 5;
+      }
+
+      &.is-stuck {
+        z-index: 7;
+      }
+    }
+
+    .hero-image {
+      position: relative;
+
+      .hero-image-overlay {
+        bottom: 0;
+        position: absolute;
+        right: 0;
+        z-index: 6;
+      }
+    }
+  }
+}

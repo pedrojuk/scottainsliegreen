@@ -1,0 +1,62 @@
+{#
+/**
+ * @file
+ * Theme override for page titles.
+ *
+ * Available variables:
+ * - title_attributes: HTML attributes for the page title element.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title: The page title, for use in the actual content.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ */
+#}
+{{ title_prefix }}
+{% if title %}
+  {% set title_rendered, titles = title|render|striptags|trim, [
+      'Latest News',
+      'News',
+      'Issues',
+      'Scott',
+      'Tags',
+      'LDN♥EU',
+      'Animals',
+      'Get in touch',
+      'European Parliament',
+      'Berkshire',
+      'Brexit',
+      'Buckinghamshire',
+      'Democracy',
+      'Environment and Health',
+      'European',
+      'Food and Farming',
+      'Green Economy and Trade',
+      'Hampshire',
+      'Isle of Wight',
+      'Kent',
+      'Oxfordshire',
+      'Peace and Human Rights',
+      'Surrey',
+      'Sussex',
+      'Transport and Aviation',
+      'Transparency',
+      'Publications',
+      'Contact',
+      'Search',
+      'Search help',
+      'Privacy policy',
+      'Archive',
+      'Log in',
+      'Reset your password',
+      'Page not found',
+      'Access denied',
+    ]
+  %}
+  {% if title_rendered in titles or 'Search for' in title_rendered or 'Archive for' in title_rendered %}
+    <h1{{ title_attributes.addClass('title-highlight-pink') }}>{{ title }}</h1><span class="highlighted-filter hide"></span>
+  {% else %}
+    <h1{{ title_attributes }}>{{ title }}</h1><span class="highlighted-filter hide"></span>
+  {% endif %}
+{% endif %}
+{{ title_suffix }}

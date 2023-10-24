@@ -1,0 +1,30 @@
+// .frontpage
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.frontpage {
+
+  .more-link {
+    font-family: $header-font-family;
+    font-size: rem-calc(map-deep-get($header-styles, small, h4, font-size));
+    @include breakpoint(medium) {
+      font-size: rem-calc(map-deep-get($header-styles, medium, h4, font-size));
+    }
+    margin-bottom: $global-margin;
+    text-transform: uppercase;
+  }
+}
+
+// .issues,
+// .keith
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+.issues,
+.keith {
+
+  h3 a {
+    text-decoration: underline;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+}
